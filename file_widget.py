@@ -1,6 +1,6 @@
 import os
 
-from PySide6.QtWidgets import QWidget, QTextEdit, QVBoxLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QTextEdit
 
 
 class FileWidget(QWidget):
@@ -15,4 +15,4 @@ class FileWidget(QWidget):
     def set_file(self, file):
         stream = os.popen('file ' + file)
         output = stream.read()
-        self._fileContent.setText(output)
+        self._fileContent.setPlainText(output)

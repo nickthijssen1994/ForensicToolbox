@@ -12,10 +12,9 @@ class ContentWidget(QWidget):
 
     def set_file(self, file):
         f = open(file, 'r')
+        data = f.read()
         with f:
             try:
-                data = f.read()
-                data = data.decode('utf-8')
                 self._fileContent.setText(data)
             except:
                 self._fileContent.setText('Could Not Read File Content')

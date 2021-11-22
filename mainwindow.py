@@ -21,8 +21,8 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
 
         available_geometry = self.screen().availableGeometry()
-        self.resize(available_geometry.width() / 3,
-                    available_geometry.height() / 2)
+        self.resize((available_geometry.width() / 3) * 2,
+                    (available_geometry.height() / 4) * 3)
         self.setWindowTitle("Forensic Toolbox")
 
         self._filePath = ""
@@ -41,6 +41,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.tabsWidget)
 
         self.show()
+        self.tabsWidget.set_file('example.txt')
 
     def closeEvent(self, event):
         event.accept()
@@ -89,4 +90,7 @@ class TabsWidget(QWidget):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_win = MainWindow()
+    with open("style.qss", "r") as f:
+        _style = f.read()
+        app.setStyleSheet(_style)
     sys.exit(app.exec())
