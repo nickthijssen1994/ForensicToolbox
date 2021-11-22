@@ -45,3 +45,6 @@ class HashWidget(QWidget):
             self._fileContent.setItem(i, 0, item_name)
             self._fileContent.setItem(i, 1, item_code)
         self._fileContent.resizeColumnToContents(1)
+
+    def clear_file(self):
+        self._fileContent.clear()

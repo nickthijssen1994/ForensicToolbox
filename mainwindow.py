@@ -83,8 +83,16 @@ class TabsWidget(QWidget):
         self.layout.addWidget(self.tabs)
 
     def set_file(self, file):
+        self.clear_file()
         for widget in self.widgets:
-            widget.set_file(file)
+            try:
+                widget.set_file(file)
+            except:
+                print("Could Not Read File")
+
+    def clear_file(self):
+        for widget in self.widgets:
+            widget.clear_file()
 
 
 if __name__ == '__main__':

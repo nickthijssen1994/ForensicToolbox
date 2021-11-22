@@ -8,13 +8,17 @@ class ContentWidget(QWidget):
         super(ContentWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
         self._fileContent = QTextEdit()
+        self._fileContent.setReadOnly(True)
         self.layout.addWidget(self._fileContent)
 
     def set_file(self, file):
-        f = open(file, 'r')
-        data = f.read()
-        with f:
-            try:
-                self._fileContent.setText(data)
-            except:
-                self._fileContent.setText('Could Not Read File Content')
+        try:
+            f = open(file, 'r')
+            data = f.read()
+            f.close()
+            self._fileContent.setText(data)
+        except:
+            self._fileContent.setText('Could Not Read File Content')
+
+    def clear_file(self):
+        self._fileContent.clear()
