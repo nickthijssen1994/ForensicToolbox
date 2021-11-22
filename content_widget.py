@@ -11,11 +11,11 @@ class ContentWidget(QWidget):
         self.layout.addWidget(self._fileContent)
 
     def set_file(self, file):
-        f = open(file, 'rb')
+        f = open(file, 'r')
         with f:
             try:
                 data = f.read()
                 data = data.decode('utf-8')
-                self._fileContent.setPlainText(data)
+                self._fileContent.setText(data)
             except:
-                self._fileContent.setPlainText('Could Not Read File Content')
+                self._fileContent.setText('Could Not Read File Content')

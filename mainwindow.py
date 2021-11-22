@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (QApplication, QDialog, QFileDialog,
 from binwalk_widget import BinwalkWidget
 from content_widget import ContentWidget
 from file_widget import FileWidget
+from libraries_widget import LibrariesWidget
 from readelf_widget import ReadElfWidget
 from strings_widget import StringsWidget
 
@@ -70,6 +71,7 @@ class TabsWidget(QWidget):
         self.widgets.append(BinwalkWidget(self))
         self.widgets.append(StringsWidget(self))
         self.widgets.append(ReadElfWidget(self))
+        self.widgets.append(LibrariesWidget(self))
         for widget in self.widgets:
             self.tabs.addTab(widget, widget.title)
 
