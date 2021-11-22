@@ -12,6 +12,7 @@ from file_widget import FileWidget
 from hash_widget import HashWidget
 from libraries_widget import LibrariesWidget
 from readelf_widget import ReadElfWidget
+from stat_widget import StatWidget
 from strings_widget import StringsWidget
 
 
@@ -71,6 +72,7 @@ class TabsWidget(QWidget):
         self.widgets = []
         self.widgets.append(ContentWidget(self))
         self.widgets.append(FileWidget(self))
+        self.widgets.append(StatWidget(self))
         self.widgets.append(HashWidget(self))
         self.widgets.append(ExifToolWidget(self))
         self.widgets.append(BinwalkWidget(self))

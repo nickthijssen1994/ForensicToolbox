@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 from PySide6.QtWidgets import QWidget, QTextEdit, QVBoxLayout
 
@@ -15,9 +16,17 @@ class BinwalkWidget(QWidget):
 
     def set_file(self, file):
         try:
-            stream = os.popen('binwalk ' + file)
-            output = stream.read()
-            self._fileContent.setText(output)
+            ssh = subprocess.Popen(["binwalk", file],
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE,
+                                   universal_newlines=True,
+                                   bufsize=0)
+            for line in ssh.stdout:
+                self._fileContent.append(line.strip())
+
+            # stream = os.popen('binwalk ' + file)
+            # output = stream.read()
+            # self._fileContent.setText(output)
         except:
             self._fileContent.setText('Could Not Read File Content')
 
