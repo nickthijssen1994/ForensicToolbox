@@ -1,11 +1,14 @@
 import sys
+
 from PySide6.QtCore import QStandardPaths, Slot
 from PySide6.QtGui import QAction, QIcon, QKeySequence
 from PySide6.QtWidgets import (QApplication, QDialog, QFileDialog,
-                               QMainWindow, QTextEdit, QWidget, QVBoxLayout, QTabWidget, QPushButton)
+                               QMainWindow, QWidget, QVBoxLayout, QTabWidget)
 
 from binwalk_widget import BinwalkWidget
+from content_widget import ContentWidget
 from file_widget import FileWidget
+from readelf_widget import ReadElfWidget
 from strings_widget import StringsWidget
 
 
@@ -20,7 +23,6 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Forensic Toolbox")
 
         self._filePath = ""
-        self._fileContent = QTextEdit()
 
         file_menu = self.menuBar().addMenu("&File")
         icon = QIcon.fromTheme("document-open")
@@ -49,11 +51,7 @@ class MainWindow(QMainWindow):
         if file_dialog.exec() == QDialog.Accepted:
             url = file_dialog.selectedFiles()[0]
             self._filePath = url
-
-            f = open(url, 'r')
-            with f:
-                data = f.read()
-                self._fileContent.setText(data)
+            self.tabsWidget.set_file(url)
 
     def show_status_message(self, message):
         self.statusBar().showMessage(message, 5000)
@@ -66,16 +64,20 @@ class TabsWidget(QWidget):
 
         self.layout = QVBoxLayout(self)
         self.tabs = QTabWidget()
-        self.binwalkWidget = BinwalkWidget(self)
-        self.stringsWidget = StringsWidget(self)
-        self.fileWidget = FileWidget(self)
-        self.tabs.resize(300, 200)
-
-        self.tabs.addTab(self.binwalkWidget, "Binwalk")
-        self.tabs.addTab(self.stringsWidget, "Strings")
-        self.tabs.addTab(self.fileWidget, "File")
+        self.widgets = []
+        self.widgets.append(ContentWidget(self))
+        self.widgets.append(FileWidget(self))
+        self.widgets.append(BinwalkWidget(self))
+        self.widgets.append(StringsWidget(self))
+        self.widgets.append(ReadElfWidget(self))
+        for widget in self.widgets:
+            self.tabs.addTab(widget, widget.title)
 
         self.layout.addWidget(self.tabs)
+
+    def set_file(self, file):
+        for widget in self.widgets:
+            widget.set_file(file)
 
 
 if __name__ == '__main__':
