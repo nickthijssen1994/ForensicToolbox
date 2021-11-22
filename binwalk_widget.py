@@ -14,6 +14,6 @@ class BinwalkWidget(QWidget):
         self.layout.addWidget(self._fileContent)
 
     def set_file(self, file):
-        stream = os.popen('binwalk -t ' + file)
+        stream = os.popen('binwalk ' + file)
         output = stream.read()
         self._fileContent.setText(output)
