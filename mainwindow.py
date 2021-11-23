@@ -42,7 +42,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.tabsWidget)
 
         self.show()
-        self.tabsWidget.set_file('example.txt')
+        self.tabsWidget.analyze_file('example.txt')
 
     def closeEvent(self, event):
         event.accept()
@@ -56,7 +56,7 @@ class MainWindow(QMainWindow):
         if file_dialog.exec() == QDialog.Accepted:
             url = file_dialog.selectedFiles()[0]
             self._filePath = url
-            self.tabsWidget.set_file(url)
+            self.tabsWidget.analyze_file(url)
 
     def show_status_message(self, message):
         self.statusBar().showMessage(message, 5000)
@@ -84,11 +84,11 @@ class TabsWidget(QWidget):
 
         self.layout.addWidget(self.tabs)
 
-    def set_file(self, file):
+    def analyze_file(self, file):
         self.clear_file()
         for widget in self.widgets:
             try:
-                widget.set_file(file)
+                widget.analyze_file(file)
             except:
                 print("Could Not Read File")
 

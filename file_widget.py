@@ -9,17 +9,17 @@ class FileWidget(QWidget):
     def __init__(self, parent):
         super(FileWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
-        self._fileContent = QTextEdit()
-        self._fileContent.setReadOnly(True)
-        self.layout.addWidget(self._fileContent)
+        self.outputField = QTextEdit()
+        self.outputField.setReadOnly(True)
+        self.layout.addWidget(self.outputField)
 
-    def set_file(self, file):
+    def analyze_file(self, file):
         try:
             stream = os.popen('file ' + file)
             output = stream.read()
-            self._fileContent.setText(output)
+            self.outputField.setText(output)
         except:
-            self._fileContent.setText('Could Not Read File Content')
+            self.outputField.setText('Could Not Read File Content')
 
     def clear_file(self):
-        self._fileContent.clear()
+        self.outputField.clear()

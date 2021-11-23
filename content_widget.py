@@ -7,18 +7,18 @@ class ContentWidget(QWidget):
     def __init__(self, parent):
         super(ContentWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
-        self._fileContent = QTextEdit()
-        self._fileContent.setReadOnly(True)
-        self.layout.addWidget(self._fileContent)
+        self.outputField = QTextEdit()
+        self.outputField.setReadOnly(True)
+        self.layout.addWidget(self.outputField)
 
-    def set_file(self, file):
+    def analyze_file(self, file):
         try:
             f = open(file, 'r')
             data = f.read()
             f.close()
-            self._fileContent.setText(data)
+            self.outputField.setText(data)
         except:
-            self._fileContent.setText('Could Not Read File Content')
+            self.outputField.setText('Could Not Read File Content')
 
     def clear_file(self):
-        self._fileContent.clear()
+        self.outputField.clear()

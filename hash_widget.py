@@ -10,8 +10,8 @@ class HashWidget(QWidget):
     def __init__(self, parent):
         super(HashWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
-        self._fileContent = QTableWidget(self)
-        self.layout.addWidget(self._fileContent)
+        self.outputField = QTableWidget(self)
+        self.layout.addWidget(self.outputField)
 
     def get_hashsums(self, file_path):
         hash_sums = od()
@@ -34,17 +34,17 @@ class HashWidget(QWidget):
             results[key] = value.hexdigest()
         return results
 
-    def set_file(self, file):
+    def analyze_file(self, file):
         data = self.get_hashsums(file).items()
-        self._fileContent.setRowCount(len(data))
-        self._fileContent.setColumnCount(2)
-        self._fileContent.setHorizontalHeaderLabels(["Function", "Hash"])
+        self.outputField.setRowCount(len(data))
+        self.outputField.setColumnCount(2)
+        self.outputField.setHorizontalHeaderLabels(["Function", "Hash"])
         for i, (function, filehash) in enumerate(data):
             item_name = QTableWidgetItem(function)
             item_code = QTableWidgetItem(filehash)
-            self._fileContent.setItem(i, 0, item_name)
-            self._fileContent.setItem(i, 1, item_code)
-        self._fileContent.resizeColumnToContents(1)
+            self.outputField.setItem(i, 0, item_name)
+            self.outputField.setItem(i, 1, item_code)
+        self.outputField.resizeColumnToContents(1)
 
     def clear_file(self):
-        self._fileContent.clear()
+        self.outputField.clear()
